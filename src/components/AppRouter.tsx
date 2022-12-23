@@ -1,3 +1,4 @@
+import React from 'react';
 import { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../hooks/redux';
@@ -5,7 +6,7 @@ import RouteNames from '../router/routeNames';
 import { privateRoutes, publicRoutes } from '../router/routes';
 import { auth_selectIsAuth } from '../store/reducers/auth/selectors';
 
-const AppRouter = () => {
+const AppRouter = React.memo(() => {
    const isAuth = useAppSelector(auth_selectIsAuth);
 
    return (
@@ -30,6 +31,6 @@ const AppRouter = () => {
             </Routes>
          </Suspense>
    );
-}
+});
 
 export default AppRouter;

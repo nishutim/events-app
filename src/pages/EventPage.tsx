@@ -44,12 +44,12 @@ const EventPage = () => {
 
    return (
       <Layout className="eventPage">
-         {events
-            ? <EventCalendar
+         {isFetchingEvents
+            ? <Preloader />
+            : <EventCalendar
                authUser={authUser!}
-               events={events}
+               events={events!}
                onRemoveEvent={handleRemoveEvent} />
-            : <Preloader />
          }
          <Button
             className="eventPageBtn"

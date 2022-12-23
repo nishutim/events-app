@@ -22,6 +22,9 @@ export const authSlice = createSlice({
          state.user = action.payload
          state.error = ''
       },
+      loginFail: (state, action: PayloadAction<string>) => {
+         state.error = action.payload
+      },
       logoutSuccess: (state) => {
          state.isAuth = false
          state.user = null

@@ -11,7 +11,22 @@
    },
    {
       "id": "3",
-      "email": "guest@gmail.com",
+      "email": "someuser@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "4",
+      "email": "gatling@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "5",
+      "email": "dirtysanchez@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "6",
+      "email": "solav@gmail.com",
       "password": "123"
    }
 ]

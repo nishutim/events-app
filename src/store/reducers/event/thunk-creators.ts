@@ -10,7 +10,7 @@ export const fetchGuests = () => async (dispatch: AppDispatch, getState: () => R
       const guests = data.filter(u => u.id !== authUser?.id);
       dispatch(EventActions.fetchUsersSuccess(guests));
    } catch (e: any) {
-      dispatch(EventActions.fetchUsersFail(e.message))
+      alert((e.message));
    }
 }
 
@@ -21,7 +21,8 @@ export const fetchEvents = () => async (dispatch: AppDispatch, getState: () => R
       const events = data.filter(ev => ev.authorId === authUser!.id || ev.guestsId.includes(authUser!.id));
       dispatch(EventActions.fetchEventsSuccess(events));
    } catch (e: any) {
-      dispatch(EventActions.fetchEventsFail(e.message));
+      alert((e.message));
+      dispatch(EventActions.fetchEventsSuccess([]));
    }
 }
 

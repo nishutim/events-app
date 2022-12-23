@@ -3,15 +3,17 @@ import { Button, Layout, Space } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
 import './App.css';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
-import { auth_selectIsAuth, auth_selectUser } from './store/reducers/auth/selectors';
-import { checkIsAuth, login, logout } from './store/reducers/auth/thunk-creators';
+import { auth_selectError, auth_selectIsAuth, auth_selectUser } from './store/reducers/auth/selectors';
+import { checkIsAuth, logout } from './store/reducers/auth/thunk-creators';
 import { useNavigate } from 'react-router-dom';
-import AppRouter from './components/AppRouter';
 import Preloader from './components/Preloader';
+import GlobalError from './components/GlobalError';
+import AppRouter from './components/AppRouter';
 
 const App = () => {
   const isAuth = useAppSelector(auth_selectIsAuth);
   const user = useAppSelector(auth_selectUser);
+  const error = useAppSelector(auth_selectError);
 
   const [appInitialized, setAppInitialized] = useState(false);
   const [btnIsLoading, setBtnIsLoading] = useState(false);
@@ -36,7 +38,8 @@ const App = () => {
     navigate('/login');
   }
 
-  if (!appInitialized) return <Preloader />
+  if (!appInitialized) return <Preloader />;
+  if (error) return <GlobalError message={error} />;
 
   return (
     <div className="appWrapper">

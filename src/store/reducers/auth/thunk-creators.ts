@@ -20,7 +20,7 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
 export const logout = () => async (dispatch: AppDispatch) => {
    try {
       dispatch(AuthActions.logoutSuccess());
-      localStorage.removeItem('user')
+      localStorage.removeItem('user');
    } catch (e: any) {
       alert(e.message);
    }
@@ -33,6 +33,6 @@ export const checkIsAuth = () => async (dispatch: AppDispatch) => {
          dispatch(AuthActions.loginSuccess(JSON.parse(user)));
       }
    } catch (e: any) {
-      alert(e.message);
+      dispatch(AuthActions.loginFail(e.message));
    }
 }

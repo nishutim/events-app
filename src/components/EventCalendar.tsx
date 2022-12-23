@@ -44,6 +44,6 @@ const EventCalendar: FC<Props> = ({ authUser, events, onRemoveEvent }) => {
          className="eventPageCalendar"
          dateCellRender={dateCellRender} />
    );
-}
+};
 
 export default EventCalendar;
