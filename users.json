@@ -1,0 +1,32 @@
+[
+   {
+      "id": "1",
+      "email": "nishutim@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "2",
+      "email": "admin@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "3",
+      "email": "someuser@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "4",
+      "email": "gatling@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "5",
+      "email": "dirtysanchez@gmail.com",
+      "password": "123"
+   },
+   {
+      "id": "6",
+      "email": "solav@gmail.com",
+      "password": "123"
+   }
+]
