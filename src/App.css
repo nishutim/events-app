@@ -260,8 +260,14 @@ body {
 }
 
 .eventsInfoModalHeader {
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 20px;
+}
+
+@media screen and (min-width: 575.98px) {
+  .eventsInfoModalHeader {
+    font-size: 20px;
+  }
 }
 
 .eventsInfoModal .eventsList {
