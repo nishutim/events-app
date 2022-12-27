@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/events-app/static/css/main.5c0ae948.css",
+    "main.css": "/events-app/static/css/main.c81c99c6.css",
     "main.js": "/events-app/static/js/main.d8a57da9.js",
     "static/js/312.e2eef32a.chunk.js": "/events-app/static/js/312.e2eef32a.chunk.js",
     "static/js/757.ee9e3ff4.chunk.js": "/events-app/static/js/757.ee9e3ff4.chunk.js",
@@ -23,7 +23,7 @@
     "static/media/Gilroy-Semibold.woff2": "/events-app/static/media/Gilroy-Semibold.7726b19d33f1b7f4135a.woff2",
     "static/media/Gilroy-Regular.woff2": "/events-app/static/media/Gilroy-Regular.f6c9931fabe5a6eb3307.woff2",
     "index.html": "/events-app/index.html",
-    "main.5c0ae948.css.map": "/events-app/static/css/main.5c0ae948.css.map",
+    "main.c81c99c6.css.map": "/events-app/static/css/main.c81c99c6.css.map",
     "main.d8a57da9.js.map": "/events-app/static/js/main.d8a57da9.js.map",
     "312.e2eef32a.chunk.js.map": "/events-app/static/js/312.e2eef32a.chunk.js.map",
     "757.ee9e3ff4.chunk.js.map": "/events-app/static/js/757.ee9e3ff4.chunk.js.map",
@@ -31,7 +31,7 @@
     "872.06deb24a.chunk.js.map": "/events-app/static/js/872.06deb24a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5c0ae948.css",
+    "static/css/main.c81c99c6.css",
     "static/js/main.d8a57da9.js"
   ]
 }
