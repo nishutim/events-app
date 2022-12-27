@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
 import { Button, DatePicker, Form, Input, Select, Space } from 'antd';
+import { useForm } from 'antd/es/form/Form';
 import dayjs, { Dayjs } from 'dayjs';
+import 'dayjs/locale/en-gb';
+import locale from 'antd/es/date-picker/locale/en_GB';
 import { v4 as uuidv4 } from 'uuid';
 import Rules from '../utils/validationRules';
 import { IEvent, IUser } from '../models';
-import { useForm } from 'antd/es/form/Form';
 
 interface Props {
    authUser: IUser | null;
@@ -25,6 +27,8 @@ const CreateEventForm: FC<Props> = React.memo(({ authUser, guests, closeModal, o
 
    const handleSubmit = async ({ date, description, selectedGuests }: EventFormValues) => {
       setLoading(true);
+      console.log(date, description, selectedGuests);
+
 
       const event = {
          id: uuidv4(),
@@ -58,7 +62,7 @@ const CreateEventForm: FC<Props> = React.memo(({ authUser, guests, closeModal, o
             name="date"
             rules={[Rules.required('Date is required!')]}
          >
-            <DatePicker className="createEventDatePicker" />
+            <DatePicker locale={locale} className="createEventDatePicker" />
          </Form.Item>
          <Form.Item
             label="Add event description"

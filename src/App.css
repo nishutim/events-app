@@ -60,19 +60,27 @@ body {
   font-size: 24px;
 }
 
-.header {
+.header.ant-layout-header {
   display: flex;
+  padding: 0 25px;
 }
 
 .headerBody {
   flex: 1 1 auto;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 479.98px) {
+  .headerBody {
+    justify-content: flex-end;
+  }
 }
 
 .headerUsername {
   font-size: 16px;
   color: #FFF;
+  word-break: break-all;
 }
 
 @media screen and (min-width: 575.98px) {
@@ -82,7 +90,7 @@ body {
 }
 
 .content {
-  padding: 15px 25px 50px;
+  padding: 15px 25px;
   display: flex;
   flex-direction: column;
   background-color: #FFF;
@@ -113,12 +121,55 @@ body {
   background-color: #FFF;
 }
 
+@media screen and (min-width: 479.98px) {
+  .eventPageBtn {
+    align-self: flex-end; 
+    min-width: 132px; 
+  }
+}
+
 .eventPageCalendar {
   flex: 1 1 auto;
 }
 
-.eventPageBtn {
-  align-self: center;
+@media screen and (max-width: 991.98px) {
+  .eventPageCalendar { display: none; }
+}
+
+.eventCalendarMobile {
+  flex: 1 1 auto;
+}
+
+@media screen and (min-width: 991.98px) {
+  .eventCalendarMobile { display: none; }
+}
+
+.eventCalendarMobileNotification {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.eventCalendartMobileIcon {
+  color: lightseagreen;
+  flex: 1 1 auto;
+}
+
+@media screen and (min-width: 575.98px) {
+  .eventCalendarMobileNotification {
+    justify-content: center;
+  }
+
+  .eventCalendartMobileIcon {
+    flex: 0 0 auto;
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+  .eventCalendartMobileText {
+    display: none;
+  }
 }
 
 .createEventForm {
@@ -174,12 +225,15 @@ body {
   padding: 0 3px;
   display: flex;
   justify-content: space-between;
+  gap: 5px;
   line-height: 1;
 }
 
 .eventsListText {
+  flex: 1 1 auto;
   display: flex;
   gap: 3px;
+  word-break: break-word;
 }
 
 .eventsListText::before {
@@ -198,4 +252,27 @@ body {
 
 .eventsListDeleteBtn:hover {
   color: lightcoral;
+}
+
+.eventsInfoModal .ant-modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventsInfoModalHeader {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.eventsInfoModal .eventsList {
+  margin-bottom: 20px;
+}
+
+.eventsInfoModal .eventsListText {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.eventsInfoModalBtn {
+  align-self: flex-end;
 }

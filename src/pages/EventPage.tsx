@@ -8,13 +8,17 @@ import { event_selectEvents } from '../store/reducers/event/selectors';
 import Preloader from '../components/Preloader';
 import EventCalendar from '../components/EventCalendar';
 import CreateEventModal from '../components/modals/CreateEventModal';
+import EventCalendarMobile from '../components/EventCalendarMobile';
+import EventsInfoModal from '../components/modals/EventsInfoModal';
 
 const EventPage = () => {
    const authUser = useAppSelector(auth_selectUser);
    const events = useAppSelector(event_selectEvents);
 
-   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
+   const [isEventsInfoModalOpen, setIsEventsInfoModalOpen] = useState(false);
    const [isFetchingEvents, setIsFetchingEvents] = useState(true);
+   const [selectedDateEvents, setSelectedDateEvents] = useState<IEvent[]>([]);
 
    const dispatch = useAppDispatch();
 
@@ -25,46 +29,72 @@ const EventPage = () => {
       }, 1000);
    }, []);
 
-   const showModal = () => {
-      setIsModalOpen(true);
+   const showCreateEventModal = () => {
+      setIsCreateEventModalOpen(true);
    };
 
-   const closeModal = useCallback(() => {
-      setIsModalOpen(false);
+   const closeCreateEventModal = useCallback(() => {
+      setIsCreateEventModalOpen(false);
+   }, []);
+
+   const showEventsInfoModal = () => {
+      setIsEventsInfoModalOpen(true);
+   };
+
+   const closeEventsInfoModal = useCallback(() => {
+      setIsEventsInfoModalOpen(false);
    }, []);
 
    const handleRemoveEvent = useCallback((id: string) => {
       dispatch(removeEvent(id));
+      setSelectedDateEvents(selectedDateEvents.filter(ev => ev.id !== id));
    }, []);
+
+   const handleDateSelect = useCallback((date: string) => {
+      const currentDateEvents = events!.filter(ev => ev.date === date);
+      setSelectedDateEvents(currentDateEvents);
+      showEventsInfoModal();
+   }, [events]);
 
    const handleSubmit = useCallback(async (event: IEvent) => {
       await dispatch(createEvent(event));
-      setIsModalOpen(false);
+      setIsCreateEventModalOpen(false);
    }, []);
 
    return (
       <Layout className="eventPage">
-         {isFetchingEvents
-            ? <Preloader />
-            : <EventCalendar
-               authUser={authUser!}
-               events={events!}
-               onRemoveEvent={handleRemoveEvent} />
-         }
          <Button
             className="eventPageBtn"
             type="primary"
             size="large"
             loading={isFetchingEvents}
             disabled={isFetchingEvents}
-            onClick={showModal}
+            onClick={showCreateEventModal}
          >
             Create event
          </Button>
+         {isFetchingEvents
+            ? <Preloader />
+            : <>
+               <EventCalendar
+                  authUser={authUser!}
+                  events={events!}
+                  onRemoveEvent={handleRemoveEvent} />
+               <EventCalendarMobile
+                  events={events!}
+                  onSelect={handleDateSelect} />
+            </>
+         }
          <CreateEventModal
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
+            isModalOpen={isCreateEventModalOpen}
+            closeModal={closeCreateEventModal}
             onSubmit={handleSubmit} />
+         <EventsInfoModal
+            authUser={authUser!}
+            selectedDateEvents={selectedDateEvents}
+            isModalOpen={isEventsInfoModalOpen}
+            closeModal={closeEventsInfoModal}
+            onRemoveEvent={handleRemoveEvent} />
       </Layout>
    );
 }

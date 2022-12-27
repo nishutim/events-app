@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { Calendar } from 'antd';
-import { Dayjs } from 'dayjs';
-import { IEvent, IUser } from '../models';
 import { DeleteOutlined } from '@ant-design/icons';
+import { Dayjs } from 'dayjs';
+import 'dayjs/locale/en-gb';
+import locale from 'antd/es/date-picker/locale/en_GB';
+import { IEvent, IUser } from '../models';
 
 interface Props {
    authUser: IUser;
@@ -42,6 +44,7 @@ const EventCalendar: FC<Props> = ({ authUser, events, onRemoveEvent }) => {
    return (
       <Calendar
          className="eventPageCalendar"
+         locale={locale}
          dateCellRender={dateCellRender} />
    );
 };
