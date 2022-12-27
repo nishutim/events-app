@@ -269,9 +269,12 @@ body {
 }
 
 .eventsInfoModal .eventsListText {
-  margin-bottom: 20px;
   font-size: 16px;
   font-weight: 400;
+}
+
+.eventsInfoText {
+  margin-bottom: 20px;
 }
 
 .eventsInfoModalBtn {
