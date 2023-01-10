@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, DatePicker, Form, Input, Select, Space } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import dayjs, { Dayjs } from 'dayjs';
@@ -11,6 +11,7 @@ import { IEvent, IUser } from '../models';
 interface Props {
    authUser: IUser | null;
    guests: IUser[] | null;
+   selectedDate: string;
    closeModal: () => void;
    onSubmit: (event: IEvent) => Promise<void>;
 }
@@ -21,21 +22,19 @@ interface EventFormValues {
    selectedGuests: string[];
 }
 
-const CreateEventForm: FC<Props> = React.memo(({ authUser, guests, closeModal, onSubmit }) => {
+const CreateEventForm: FC<Props> = React.memo(({ authUser, guests, selectedDate, closeModal, onSubmit }) => {
    const [form] = useForm();
    const [loading, setLoading] = useState(false);
 
    const handleSubmit = async ({ date, description, selectedGuests }: EventFormValues) => {
       setLoading(true);
-      console.log(date, description, selectedGuests);
-
 
       const event = {
          id: uuidv4(),
          authorId: `${authUser?.id}` || '0',
-         date: date.format('YYYY-DD-MM'),
+         date: date.format('YYYY-MM-DD'),
          description,
-         guestsId: selectedGuests
+         guestsId: selectedGuests || []
       };
 
       setTimeout(async () => {
@@ -45,6 +44,12 @@ const CreateEventForm: FC<Props> = React.memo(({ authUser, guests, closeModal, o
       }, 1000);
    }
 
+   useEffect(() => {
+      form.setFieldsValue({
+         date: dayjs(selectedDate)
+      })
+   }, [selectedDate]);
+
    return (
       <Form
          className="createEventForm"
@@ -53,11 +58,12 @@ const CreateEventForm: FC<Props> = React.memo(({ authUser, guests, closeModal, o
          autoComplete="off"
          onFinish={handleSubmit}
          initialValues={{
-            date: dayjs()
+            date: dayjs(selectedDate)
          }}
       >
          <h3 className="createEventFormHeader">Create event</h3>
          <Form.Item
+            shouldUpdate
             label="Select event date"
             name="date"
             rules={[Rules.required('Date is required!')]}

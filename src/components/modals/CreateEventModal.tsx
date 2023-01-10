@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Modal } from 'antd';
+import { Dayjs } from 'dayjs';
 import CreateEventForm from '../CreateEventForm';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { event_selectGuests } from '../../store/reducers/event/selectors';
@@ -11,9 +12,10 @@ interface Props {
    isModalOpen: boolean;
    closeModal: () => void;
    onSubmit: (event: IEvent) => Promise<void>;
+   selectedDate: string;
 }
 
-const CreateEventModal: FC<Props> = React.memo(({ isModalOpen, closeModal, onSubmit }) => {
+const CreateEventModal: FC<Props> = React.memo(({ isModalOpen, closeModal, onSubmit, selectedDate }) => {
    const authUser = useAppSelector(auth_selectUser);
    const guests = useAppSelector(event_selectGuests);
 
@@ -33,6 +35,7 @@ const CreateEventModal: FC<Props> = React.memo(({ isModalOpen, closeModal, onSub
          <CreateEventForm
             authUser={authUser}
             guests={guests}
+            selectedDate={selectedDate}
             closeModal={closeModal}
             onSubmit={onSubmit} />
       </Modal>

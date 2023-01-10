@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Layout } from 'antd';
+import dayjs from 'dayjs';
 import { IEvent } from '../models';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { createEvent, fetchEvents, removeEvent } from '../store/reducers/event/thunk-creators';
 import { auth_selectUser } from '../store/reducers/auth/selectors';
-import { event_selectEvents } from '../store/reducers/event/selectors';
+import { event_selectEvents, event_selectSelectedDate } from '../store/reducers/event/selectors';
 import Preloader from '../components/Preloader';
 import EventCalendar from '../components/EventCalendar';
 import CreateEventModal from '../components/modals/CreateEventModal';
 import EventCalendarMobile from '../components/EventCalendarMobile';
 import EventsInfoModal from '../components/modals/EventsInfoModal';
+import { EventActions } from '../store/reducers/event';
 
 const EventPage = () => {
    const authUser = useAppSelector(auth_selectUser);
+   const selectedDate = useAppSelector(event_selectSelectedDate);
    const events = useAppSelector(event_selectEvents);
 
    const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
@@ -21,13 +24,6 @@ const EventPage = () => {
    const [selectedDateEvents, setSelectedDateEvents] = useState<IEvent[]>([]);
 
    const dispatch = useAppDispatch();
-
-   useEffect(() => {
-      setTimeout(async () => {
-         await dispatch(fetchEvents())
-         setIsFetchingEvents(false);
-      }, 1000);
-   }, []);
 
    const showCreateEventModal = () => {
       setIsCreateEventModalOpen(true);
@@ -51,6 +47,10 @@ const EventPage = () => {
    }, []);
 
    const handleDateSelect = useCallback((date: string) => {
+      dispatch(EventActions.setSelectedDate(date));
+   }, []);
+
+   const handleDateSelectMobile = useCallback((date: string) => {
       const currentDateEvents = events!.filter(ev => ev.date === date);
       setSelectedDateEvents(currentDateEvents);
       showEventsInfoModal();
@@ -59,6 +59,15 @@ const EventPage = () => {
    const handleSubmit = useCallback(async (event: IEvent) => {
       await dispatch(createEvent(event));
       setIsCreateEventModalOpen(false);
+   }, []);
+
+   useEffect(() => {
+      setTimeout(async () => {
+         await dispatch(fetchEvents())
+         setIsFetchingEvents(false);
+      }, 1000);
+
+      handleDateSelect(dayjs().format('YYYY-MM-DD'));
    }, []);
 
    return (
@@ -79,22 +88,24 @@ const EventPage = () => {
                <EventCalendar
                   authUser={authUser!}
                   events={events!}
-                  onRemoveEvent={handleRemoveEvent} />
+                  onRemoveEvent={handleRemoveEvent}
+                  onSelect={handleDateSelect} />
                <EventCalendarMobile
                   events={events!}
-                  onSelect={handleDateSelect} />
+                  onSelect={handleDateSelectMobile} />
+               <CreateEventModal
+                  isModalOpen={isCreateEventModalOpen}
+                  closeModal={closeCreateEventModal}
+                  onSubmit={handleSubmit}
+                  selectedDate={selectedDate!} />
+               <EventsInfoModal
+                  authUser={authUser!}
+                  selectedDateEvents={selectedDateEvents}
+                  isModalOpen={isEventsInfoModalOpen}
+                  closeModal={closeEventsInfoModal}
+                  onRemoveEvent={handleRemoveEvent} />
             </>
          }
-         <CreateEventModal
-            isModalOpen={isCreateEventModalOpen}
-            closeModal={closeCreateEventModal}
-            onSubmit={handleSubmit} />
-         <EventsInfoModal
-            authUser={authUser!}
-            selectedDateEvents={selectedDateEvents}
-            isModalOpen={isEventsInfoModalOpen}
-            closeModal={closeEventsInfoModal}
-            onRemoveEvent={handleRemoveEvent} />
       </Layout>
    );
 }

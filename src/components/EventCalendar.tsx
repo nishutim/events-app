@@ -10,15 +10,16 @@ interface Props {
    authUser: IUser;
    events: IEvent[];
    onRemoveEvent: (id: string) => void;
+   onSelect: (date: string) => void;
 }
 
-const EventCalendar: FC<Props> = ({ authUser, events, onRemoveEvent }) => {
+const EventCalendar: FC<Props> = ({ authUser, events, onRemoveEvent, onSelect }) => {
    const handleRemoveEvent = (id: string) => {
       onRemoveEvent(id);
    }
 
    const dateCellRender = (value: Dayjs) => {
-      const formattedDate = value.format('YYYY-DD-MM');
+      const formattedDate = value.format('YYYY-MM-DD');
       const currentDayEvents = events.filter(ev => ev.date === formattedDate);
 
       return (
@@ -41,11 +42,17 @@ const EventCalendar: FC<Props> = ({ authUser, events, onRemoveEvent }) => {
       );
    };
 
+   const handleSelect = (date: Dayjs) => {
+      const formattedDate = date.format('YYYY-MM-DD');
+      onSelect(formattedDate);
+   }
+
    return (
       <Calendar
          className="eventPageCalendar"
          locale={locale}
-         dateCellRender={dateCellRender} />
+         dateCellRender={dateCellRender}
+         onSelect={handleSelect} />
    );
 };
 

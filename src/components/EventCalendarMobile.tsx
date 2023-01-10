@@ -13,7 +13,7 @@ interface Props {
 
 const EventCalendarMobile: FC<Props> = ({ events, onSelect }) => {
    const dateCellRender = (value: Dayjs) => {
-      const formattedDate = value.format('YYYY-DD-MM');
+      const formattedDate = value.format('YYYY-MM-DD');
       const currentDayEvents = events.filter(ev => ev.date === formattedDate);
 
       return (
@@ -29,7 +29,7 @@ const EventCalendarMobile: FC<Props> = ({ events, onSelect }) => {
    };
 
    const handleSelect = (date: Dayjs) => {
-      const formattedDate = date.format('YYYY-DD-MM');
+      const formattedDate = date.format('YYYY-MM-DD');
       onSelect(formattedDate);
    }
 

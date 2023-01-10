@@ -1,13 +1,16 @@
+import { Dayjs } from 'dayjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IEvent, IUser } from '../../../models'
 
 interface InitialState {
+   selectedDate: string;
    guests: IUser[] | null;
    events: IEvent[] | null;
    error: string;
 }
 
 const initialState = {
+   selectedDate: '',
    guests: null,
    events: null,
    error: ''
@@ -38,6 +41,9 @@ const eventSlice = createSlice({
       },
       fetchEventsFail: (state, action: PayloadAction<string>) => {
          state.error = action.payload
+      },
+      setSelectedDate: (state, action: PayloadAction<string>) => {
+         state.selectedDate = action.payload
       }
    }
 });
